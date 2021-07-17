@@ -1,0 +1,15 @@
+{
+  "name": "the-sauce",
+  "version": "1.0.0",
+  "description": "Browse your favorite Sauce within discord!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "npm i"
+  },
+  "author": "SammCheese",
+  "license": "MIT",
+  "dependencies": {
+    "nhentai": "^2.1.1"
+  }
+}
