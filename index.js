@@ -2,7 +2,7 @@ const { Plugin } = require("powercord/entities");
 const Functions = require("./components/Functions");
 
 const SauceRegex = /\/g\/[0-9]{1,6}/;
-const chatembed = require('./components/chatembed');
+const chatembed = require("./components/chatembed");
 
 const nhentai = require("nhentai");
 const api = new nhentai.API();
@@ -13,41 +13,41 @@ module.exports = class TheSauce extends Plugin {
       command: "sauce",
       aliases: ["nhentai"],
       description: "Look up your Sauce in discord!",
-      usage: "< Sauce Code | Sauce Link | Tag | Random >",
-      executor: async ([url]) => {
-        if (!url) return "I require arguments, dummy!";
-
-        if (url.startsWith("https://nhentai.net")) {
-          url = url.match(SauceRegex)[0].replace("/g/", "");
+      usage: "[prefix]sauce < Sauce Code | Sauce Link | Random >",
+      executor: async ([args]) => {
+        if (!args) {
+          args = await api.randomDoujinID(); //Failsafe
         }
 
-        if (url == "Random".toLowerCase()) {
-          url = await api.randomDoujinID()
-        }
-        else {
-          url = await api.searchByTagID(url)
+        if (args.startsWith("https://nhentai.net")) {
+          args = args.match(SauceRegex)[0].replace("/g/", "");
         }
 
-        return chatembed.executor(url);
+        if (args == "Random".toLowerCase()) {
+          args = await api.randomDoujinID();
+        }
+
+        return chatembed.executor(args);
       },
-      autocomplete: ([url]) => {
-        if (url.length !== 1) {
+      autocomplete: ([args]) => {
+        if (args.length !== 1) {
           return false;
         }
         let options = {
-          Sauce: 'Get Data from Code or link. i.e 52672 or https://nhentai.net/g/52672/',
-          random: "Get a Random Doujin from nhentai.net"
-        }
+          Sauce:
+            "Get Data from Code or link. i.e 52672 or https://nhentai.net/g/52672/",
+          random: "Get a Random Doujin from nhentai.net",
+        };
         return {
           commands: Object.keys(options)
-            .filter((option) => option.includes(url[0].toLowerCase()))
+            .filter((option) => option.includes(args[0].toLowerCase()))
             .map((option) => ({
               command: option,
               description: options[option],
             })),
           header: "Sauce Commands",
         };
-      }
+      },
     });
   }
 
