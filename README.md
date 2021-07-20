@@ -1,5 +1,5 @@
 # powercord-sauce (NSFW)
-Get details about your favorite Sauce! (Sadly the cover doesnt work yet)
+Get details about your favorite Sauce!
 
 **Usage**
 
