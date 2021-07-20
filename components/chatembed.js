@@ -18,16 +18,17 @@ let embed = {
 module.exports = {
   executor: async (Code) => {
     api.fetchDoujin(Code).then(doujin => {
+      console.log(doujin);
       let cover = doujin.cover.url;
       embed.description = `Tags: ${doujin.tags.all.map(tag => tag.name).join(', ')}`;
       embed.title = doujin.titles.pretty;
       embed.url = doujin.url;
       embed.image = {
-        url: cover,
+        url: "https://external-content.duckduckgo.com/iu/?u="+cover,
         width: doujin.cover.width,
         height: doujin.cover.height
       };
-      embed.footer.text = `${doujin.url}`
+      embed.footer.text = `${doujin.id}`
       return sendBotMessage(embed);
     });
   }
