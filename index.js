@@ -14,16 +14,15 @@ module.exports = class TheSauce extends Plugin {
       aliases: ["nhentai"],
       description: "Look up your Sauce in discord!",
       usage: "[prefix]sauce < Sauce Code | Sauce Link | Random >",
-      executor: async ([args]) => {
-        if (args.startsWith("https://nhentai.net")) {
-          args = args.match(SauceRegex)[0].replace("/g/", "");
+      executor: async (args) => {
+        if (args[1] && args[1].startsWith("https://nhentai.net")) {
+          args[1] = args[1].match(SauceRegex)[0].replace("/g/", "");
+        }
+        if (args[0] == "Random".toLowerCase() || !args[1]) {
+          args[1] = await api.randomDoujinID();
         }
 
-        if (args == "Random".toLowerCase()) {
-          args = await api.randomDoujinID();
-        }
-
-        return chatembed.executor(args);
+        return chatembed.executor(args[1]);
       },
       autocomplete: (args) => {
         if (args.length !== 1) {

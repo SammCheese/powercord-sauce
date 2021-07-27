@@ -11,19 +11,3 @@ exports.sendBotMessage = (content) => {
   received.embeds.push(content);
   return receiveMessage(received.channel_id, received);
 }
-
-// If Base Embed Should be Used
-exports.reply = (title, content, footer) => {
-  this.sendBotMessage(
-    Object.assign(
-      {
-        title: title,
-        description: content,
-        footer: {
-          text: "Made with ❤️ by Sammy!",
-        },
-      },
-      embed
-    )
-  );
-}
