@@ -7,24 +7,23 @@ module.exports = {
   executor: async (Code, page, isUpdate) => {
     const { cover, id, length, tags, titles, url, pages } =
       await api.fetchDoujin(Code);
-    const apis = await api.fetchDoujin(Code);
 
     const getDescription = () => {
-      let description = `Tags: ${apis.tags.tags
+      let description = `Tags: ${tags.tags
         .map((tag) => tag.name)
-        .join(", ")}`;
+        .join(', ')}`;
 
-      if (apis.tags.characters.length > 0) {
-        description += `\n\nCharacters: ${apis.tags.characters
+      if (tags.characters.length > 0) {
+        description += `\n\nCharacters: ${tags.characters
           .map((char) => char.name)
-          .join(", ")}`;
+          .join(', ')}`;
       }
 
       return description;
     };
 
-    var embed = {
-      type: "rich",
+    const embed = {
+      type: 'rich',
       url,
       title: titles.pretty,
       description: getDescription(),
@@ -32,22 +31,22 @@ module.exports = {
         proxy_url: `https://external-content.duckduckgo.com/iu/?u=${cover.url}`,
         url: `https://external-content.duckduckgo.com/iu/?u=${cover.url}`,
         width: cover.width,
-        height: cover.height,
+        height: cover.height
       },
-      color: "0x45f5f5",
+      color: '0x45f5f5',
       footer: {
-        text: `${id} | ${length} Pages`,
-      },
+        text: `${id} | ${length} Pages`
+      }
     };
 
     if (isUpdate) {
       embed.image = {
-        proxy_url: `https://external-content.duckduckgo.com/iu/?u=${apis.pages[page].url}`,
-        url: `https://external-content.duckduckgo.com/iu/?u=${apis.pages[page].url}`,
-        width: apis.pages[page].width,
-        height: apis.pages[page].height
+        proxy_url: `https://external-content.duckduckgo.com/iu/?u=${pages[page].url}`,
+        url: `https://external-content.duckduckgo.com/iu/?u=${pages[page].url}`,
+        width: pages[page].width,
+        height: pages[page].height
       };
-      embed.footer.text = `${id} | ${length} Pages | Page ${page} / ${length}`;
+      embed.footer.text = `${id} | ${length} Pages | Page ${page + 1} / ${length}`;
       return updateMessage(embed);
     }
 
