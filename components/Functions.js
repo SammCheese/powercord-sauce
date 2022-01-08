@@ -12,7 +12,7 @@ let received = {};
 exports.sendBotMessage = (content) => {
   received = createBotMessage(channels.getChannelId(), '');
   received.embeds.push(content);
-  Object.assign(received, (application = { id: 'nhentaiPlugin' })); // needed for the button recognition
+  Object.assign(received, ({ applicationId: 'nhentaiPlugin' })); // needed for the button recognition
   return receiveMessage(received.channel_id, received);
 };
 
