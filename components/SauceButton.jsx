@@ -1,9 +1,10 @@
 const { Button } = require("powercord/components");
-const { React } = require("powercord/webpack");
+const { React, getModule } = require("powercord/webpack");
 
 const chatembed = require("./chatembed");
+const f = require("./Functions")
 
-let page = 1;
+let page = 0;
 let doujinNumber;
 let maxPages;
 
@@ -57,7 +58,7 @@ module.exports = class DounjinButtons extends React.PureComponent {
           look={Button.Looks.SUCCESS}
           color={Button.Colors.BLUE}
           size={Button.Sizes.SMALL}
-          onClick={() => chatembed.executor(doujinNumber, this.calcPage(true), true)}
+          onClick={() => chatembed.executor(doujinNumber, this.calcPage(true), true, this.props.props[0].childrenMessageContent.props.message)}
         >
           Next
         </Button>
@@ -66,7 +67,7 @@ module.exports = class DounjinButtons extends React.PureComponent {
           look={Button.Looks.SUCCESS}
           color={Button.Colors.BLUE}
           size={Button.Sizes.SMALL}
-          onClick={() => chatembed.executor(doujinNumber, this.calcPage(), true)}
+          onClick={() => chatembed.executor(doujinNumber, this.calcPage(), true, this.props.props[0].childrenMessageContent.props.message)}
         >
           Prev
         </Button>
@@ -76,10 +77,21 @@ module.exports = class DounjinButtons extends React.PureComponent {
           color={Button.Colors.BLUE}
           size={Button.Sizes.SMALL}
           onClick={() => {
-            { chatembed.executor(doujinNumber, 0, true); } page = 0; 
+            { chatembed.executor(doujinNumber, 0, true, this.props.props[0].childrenMessageContent.props.message); } page = 0; 
           }}
         >
           Page 1
+        </Button>
+        <Button
+          style={{ position: 'absolute', left: 5, bottom: '30%' }}
+          look={Button.Looks.SUCCESS}
+          color={Button.Colors.BLUE}
+          size={Button.Sizes.SMALL}
+          onClick={() => {
+            f.dismissMessage(this.props.props[0].childrenMessageContent.props.message);
+          }}
+        >
+          Dismiss
         </Button>
       </div>
     );

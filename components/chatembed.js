@@ -4,7 +4,7 @@ const nhentai = require("nhentai");
 const api = new nhentai.API();
 
 module.exports = {
-  executor: async (Code, page, isUpdate) => {
+  executor: async (Code, page, isUpdate, messageObject) => {
     const { cover, id, length, tags, titles, url, pages } =
       await api.fetchDoujin(Code);
 
@@ -47,7 +47,7 @@ module.exports = {
         height: pages[page].height
       };
       embed.footer.text = `${id} | ${length} Pages | Page ${page + 1} / ${length}`;
-      return updateMessage(embed);
+      return updateMessage(messageObject, embed);
     }
 
     return sendBotMessage(embed);

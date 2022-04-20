@@ -6,21 +6,28 @@ const { getModule, channels, FluxDispatcher } = require('powercord/webpack');
 const { createBotMessage } = getModule(['createBotMessage'], false);
 const { receiveMessage } = getModule(['receiveMessage'], false);
 
-let received = {};
-
 // Send Botmessage to current Channel
 exports.sendBotMessage = (content) => {
-  received = createBotMessage(channels.getChannelId(), '');
+  let received = createBotMessage(channels.getChannelId(), '');
   received.embeds.push(content);
   Object.assign(received, ({ applicationId: 'nhentaiPlugin' })); // needed for the button recognition
-  return receiveMessage(received.channel_id, received);
+  return receiveMessage(channels.getChannelId(), received);
 };
 
 // Update Previous Botmessage (Thanks Oocrop)
-exports.updateMessage = (embeds) => {
-  received.embeds[0] = embeds;
+exports.updateMessage = (messageObject, embeds) => {
+  messageObject.embeds[0] = embeds;
   FluxDispatcher.dispatch({
     type: 'MESSAGE_UPDATE',
-    message: received
+    message: messageObject
   });
 };
+
+exports.dismissMessage = (messageObject) => {
+  messageObject.embeds = [];
+  messageObject.applicationId = '';
+  FluxDispatcher.dispatch({
+    type: 'MESSAGE_UPDATE',
+    message: messageObject
+  })
+}
