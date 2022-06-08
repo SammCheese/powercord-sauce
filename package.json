@@ -8,7 +8,7 @@
     "setup": "npm i"
   },
   "author": "SammCheese",
-  "license": "MIT",
+  "license": "Unlicensed",
   "dependencies": {
     "nhentai": "^2.1.1"
   }
