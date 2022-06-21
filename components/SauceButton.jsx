@@ -52,7 +52,6 @@ module.exports = class DounjinButtons extends React.PureComponent {
   render() {
     return (
       <div>
-        <text style={{ color: 'white' }}>You need to dismiss this embed to open a new one</text>
         <Button
           style={{ position: 'absolute', left: 5, bottom: '60%' }}
           look={Button.Looks.SUCCESS}

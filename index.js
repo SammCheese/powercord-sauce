@@ -20,7 +20,6 @@ module.exports = class TheSauce extends Plugin {
       d(m)?.toString().includes('MessageContent')
     );
     inject('sauce-button', MessageHeader, 'default', ([props], res) => {
-      console.log(res);
       const isNhentai = res.props.children.props.children;
       try {
         if (isNhentai[4].props.message.applicationId === 'nhentaiPlugin') { // make sure embed was sent by the plugin
