@@ -1,3 +1,5 @@
+# DEPRECTATED: Due to changes server-side, this project has been made impossible to maintain and  therefore been abandoned
+
 # Powercord Sauce (NSFW)
 
 Get details about your favorite Sauce!
